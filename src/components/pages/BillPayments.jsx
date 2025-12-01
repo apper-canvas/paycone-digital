@@ -178,17 +178,17 @@ const loadPendingBills = async () => {
             <h3 className="text-lg font-semibold text-gray-900">
               Payment Reminders
             </h3>
-            <button
+<button
               onClick={() => navigate('/payment-reminders')}
               className="text-sm text-primary font-medium hover:text-primary-dark transition-colors"
             >
->
               View All
             </button>
           </div>
           <div className="space-y-3">
 {billsWithReminders.map((bill) => {
               const getUrgencyColors = (urgency) => {
+                switch (urgency) {
                   case 'critical':
                     return 'bg-red-50 border-red-200 text-red-700';
                   case 'high':
