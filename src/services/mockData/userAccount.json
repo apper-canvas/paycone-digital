@@ -1,0 +1,19 @@
+{
+  "balance": 12750.00,
+  "dailyLimit": 25000.00,
+  "spentToday": 3250.00,
+  "linkedBanks": [
+    {
+      "bankName": "State Bank of India",
+      "accountNumber": "****1234",
+      "isPrimary": true
+    },
+    {
+      "bankName": "HDFC Bank",
+      "accountNumber": "****5678",
+      "isPrimary": false
+    }
+  ],
+  "upiId": "user@paytm",
+  "lastUpdated": "2024-01-15T14:30:00Z"
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "Id": 1,
+    "name": "John Doe",
+    "phone": "+91-9876543210",
+    "upiId": "john.doe@paytm",
+    "lastTransactionAmount": 1250.00,
+    "transactionCount": 5
+  },
+  {
+    "Id": 2,
+    "name": "Sarah Wilson",
+    "phone": "+91-9876543211",
+    "upiId": "sarah.wilson@upi",
+    "lastTransactionAmount": 2500.00,
+    "transactionCount": 3
+  },
+  {
+    "Id": 3,
+    "name": "Mike Chen",
+    "phone": "+91-9876543212",
+    "upiId": "mike.chen@upi",
+    "lastTransactionAmount": 500.00,
+    "transactionCount": 7
+  },
+  {
+    "Id": 4,
+    "name": "Emma Davis",
+    "phone": "+91-9876543213",
+    "upiId": "emma.davis@paytm",
+    "lastTransactionAmount": 750.00,
+    "transactionCount": 2
+  },
+  {
+    "Id": 5,
+    "name": "Alex Johnson",
+    "phone": "+91-9123456780",
+    "upiId": "alex.johnson@upi",
+    "lastTransactionAmount": 5000.00,
+    "transactionCount": 4
+  },
+  {
+    "Id": 6,
+    "name": "Lisa Brown",
+    "phone": "+91-9876543215",
+    "upiId": "lisa.brown@upi",
+    "lastTransactionAmount": 1200.00,
+    "transactionCount": 8
+  },
+  {
+    "Id": 7,
+    "name": "David Park",
+    "phone": "+91-9876543216",
+    "upiId": "david.park@paytm",
+    "lastTransactionAmount": 300.00,
+    "transactionCount": 12
+  },
+  {
+    "Id": 8,
+    "name": "Tom Anderson",
+    "phone": "+91-9567812345",
+    "upiId": "tom.anderson@upi",
+    "lastTransactionAmount": 1500.00,
+    "transactionCount": 6
+  },
+  {
+    "Id": 9,
+    "name": "Rachel Green",
+    "phone": "+91-9876543218",
+    "upiId": "rachel.green@upi",
+    "lastTransactionAmount": 850.00,
+    "transactionCount": 3
+  },
+  {
+    "Id": 10,
+    "name": "Kevin Smith",
+    "phone": "+91-9876543219",
+    "upiId": "kevin.smith@paytm",
+    "lastTransactionAmount": 450.00,
+    "transactionCount": 9
+  },
+  {
+    "Id": 11,
+    "name": "Jennifer Lee",
+    "phone": "+91-9876543220",
+    "upiId": "jennifer.lee@upi",
+    "lastTransactionAmount": 680.00,
+    "transactionCount": 4
+  },
+  {
+    "Id": 12,
+    "name": "Mark Taylor",
+    "phone": "+91-9876543221",
+    "upiId": "mark.taylor@paytm",
+    "lastTransactionAmount": 920.00,
+    "transactionCount": 7
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "Id": 1,
+    "category": "electricity",
+    "provider": "State Electricity Board",
+    "accountNumber": "EB123456789",
+    "amount": 1800.00,
+    "dueDate": "2024-01-20T23:59:59Z",
+    "status": "paid"
+  },
+  {
+    "Id": 2,
+    "category": "water",
+    "provider": "Municipal Water Department",
+    "accountNumber": "WD987654321",
+    "amount": 2200.00,
+    "dueDate": "2024-01-25T23:59:59Z",
+    "status": "paid"
+  },
+  {
+    "Id": 3,
+    "category": "gas",
+    "provider": "City Gas Company",
+    "accountNumber": "GC789123456",
+    "amount": 1650.00,
+    "dueDate": "2024-01-30T23:59:59Z",
+    "status": "paid"
+  },
+  {
+    "Id": 4,
+    "category": "internet",
+    "provider": "Fiber Broadband Services",
+    "accountNumber": "ISP456789123",
+    "amount": 899.00,
+    "dueDate": "2024-02-05T23:59:59Z",
+    "status": "pending"
+  },
+  {
+    "Id": 5,
+    "category": "mobile",
+    "provider": "Airtel",
+    "accountNumber": "+91-9876543210",
+    "amount": 399.00,
+    "dueDate": "2024-02-01T23:59:59Z",
+    "status": "pending"
+  },
+  {
+    "Id": 6,
+    "category": "electricity",
+    "provider": "State Electricity Board",
+    "accountNumber": "EB123456789",
+    "amount": 1950.00,
+    "dueDate": "2024-02-20T23:59:59Z",
+    "status": "pending"
+  }
+]

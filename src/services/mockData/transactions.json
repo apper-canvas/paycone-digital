@@ -1,0 +1,167 @@
+[
+  {
+    "Id": 1,
+    "type": "send",
+    "amount": 1250.00,
+    "recipient": "John Doe",
+    "recipientId": "john.doe@paytm",
+    "date": "2024-01-15T14:30:00Z",
+    "status": "completed",
+    "note": "Lunch payment",
+    "category": "food"
+  },
+  {
+    "Id": 2,
+    "type": "receive",
+    "amount": 2500.00,
+    "recipient": "Sarah Wilson",
+    "recipientId": "+91-9876543210",
+    "date": "2024-01-15T10:15:00Z",
+    "status": "completed",
+    "note": "Salary advance",
+    "category": "transfer"
+  },
+  {
+    "Id": 3,
+    "type": "bill",
+    "amount": 1800.00,
+    "recipient": "Electricity Board",
+    "recipientId": "EB123456789",
+    "date": "2024-01-14T16:45:00Z",
+    "status": "completed",
+    "note": "Monthly electricity bill",
+    "category": "electricity"
+  },
+  {
+    "Id": 4,
+    "type": "send",
+    "amount": 500.00,
+    "recipient": "Mike Chen",
+    "recipientId": "mike.chen@upi",
+    "date": "2024-01-14T12:20:00Z",
+    "status": "pending",
+    "note": "Movie tickets",
+    "category": "entertainment"
+  },
+  {
+    "Id": 5,
+    "type": "recharge",
+    "amount": 399.00,
+    "recipient": "Airtel Mobile",
+    "recipientId": "+91-9876543210",
+    "date": "2024-01-13T18:30:00Z",
+    "status": "completed",
+    "note": "Monthly mobile recharge",
+    "category": "mobile"
+  },
+  {
+    "Id": 6,
+    "type": "send",
+    "amount": 750.00,
+    "recipient": "Emma Davis",
+    "recipientId": "emma.davis@paytm",
+    "date": "2024-01-13T09:15:00Z",
+    "status": "failed",
+    "note": "Gift contribution",
+    "category": "gift"
+  },
+  {
+    "Id": 7,
+    "type": "bill",
+    "amount": 2200.00,
+    "recipient": "Water Department",
+    "recipientId": "WD987654321",
+    "date": "2024-01-12T11:30:00Z",
+    "status": "completed",
+    "note": "Quarterly water bill",
+    "category": "water"
+  },
+  {
+    "Id": 8,
+    "type": "receive",
+    "amount": 5000.00,
+    "recipient": "Alex Johnson",
+    "recipientId": "+91-9123456780",
+    "date": "2024-01-12T08:45:00Z",
+    "status": "completed",
+    "note": "Freelance payment",
+    "category": "income"
+  },
+  {
+    "Id": 9,
+    "type": "send",
+    "amount": 1200.00,
+    "recipient": "Lisa Brown",
+    "recipientId": "lisa.brown@upi",
+    "date": "2024-01-11T15:20:00Z",
+    "status": "completed",
+    "note": "Shared taxi fare",
+    "category": "transport"
+  },
+  {
+    "Id": 10,
+    "type": "bill",
+    "amount": 899.00,
+    "recipient": "Internet Service Provider",
+    "recipientId": "ISP456789123",
+    "date": "2024-01-11T13:10:00Z",
+    "status": "completed",
+    "note": "Monthly internet bill",
+    "category": "internet"
+  },
+  {
+    "Id": 11,
+    "type": "send",
+    "amount": 300.00,
+    "recipient": "David Park",
+    "recipientId": "david.park@paytm",
+    "date": "2024-01-10T17:45:00Z",
+    "status": "completed",
+    "note": "Coffee meetup",
+    "category": "food"
+  },
+  {
+    "Id": 12,
+    "type": "recharge",
+    "amount": 199.00,
+    "recipient": "DTH Service",
+    "recipientId": "DTH123456789",
+    "date": "2024-01-10T14:30:00Z",
+    "status": "completed",
+    "note": "DTH recharge",
+    "category": "entertainment"
+  },
+  {
+    "Id": 13,
+    "type": "receive",
+    "amount": 1500.00,
+    "recipient": "Tom Anderson",
+    "recipientId": "+91-9567812345",
+    "date": "2024-01-09T19:20:00Z",
+    "status": "completed",
+    "note": "Rent share",
+    "category": "housing"
+  },
+  {
+    "Id": 14,
+    "type": "send",
+    "amount": 850.00,
+    "recipient": "Rachel Green",
+    "recipientId": "rachel.green@upi",
+    "date": "2024-01-09T11:15:00Z",
+    "status": "completed",
+    "note": "Birthday gift",
+    "category": "gift"
+  },
+  {
+    "Id": 15,
+    "type": "bill",
+    "amount": 1650.00,
+    "recipient": "Gas Company",
+    "recipientId": "GC789123456",
+    "date": "2024-01-08T16:40:00Z",
+    "status": "completed",
+    "note": "Monthly gas bill",
+    "category": "gas"
+  }
+]
