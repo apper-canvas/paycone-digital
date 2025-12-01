@@ -40,7 +40,7 @@ class BillPaymentService {
       .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
   }
 
-  async getUpcomingBills(days = 30) {
+async getUpcomingBills(days = 30) {
     await this.delay();
     const today = new Date();
     const futureDate = new Date(today.getTime() + days * 24 * 60 * 60 * 1000);
@@ -51,6 +51,121 @@ class BillPaymentService {
         return dueDate >= today && dueDate <= futureDate && bill.status === "pending";
       })
       .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+  }
+
+  async getBillsWithReminders() {
+    await this.delay();
+    const today = new Date();
+    
+    return this.billPayments
+      .filter(bill => bill.status === "pending")
+      .map(bill => {
+        const dueDate = new Date(bill.dueDate);
+        const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+        const isOverdue = daysUntilDue < 0;
+        const isDueToday = daysUntilDue === 0;
+        const isDueSoon = daysUntilDue > 0 && daysUntilDue <= 7;
+        
+        let urgency = 'low';
+        let reminderStatus = 'none';
+        
+        if (isOverdue) {
+          urgency = 'critical';
+          reminderStatus = 'overdue';
+        } else if (isDueToday) {
+          urgency = 'high';
+          reminderStatus = 'due-today';
+        } else if (isDueSoon) {
+          urgency = 'medium';
+          reminderStatus = 'due-soon';
+        }
+        
+        return {
+          ...bill,
+          daysUntilDue,
+          isOverdue,
+          isDueToday,
+          isDueSoon,
+          urgency,
+          reminderStatus,
+          reminderEnabled: true,
+          reminderDays: 3,
+          lastReminded: null,
+          snoozedUntil: null
+        };
+      })
+      .sort((a, b) => {
+        // Sort by urgency: overdue → due today → due soon → future
+        const urgencyOrder = { critical: 0, high: 1, medium: 2, low: 3 };
+        if (urgencyOrder[a.urgency] !== urgencyOrder[b.urgency]) {
+          return urgencyOrder[a.urgency] - urgencyOrder[b.urgency];
+        }
+        return new Date(a.dueDate) - new Date(b.dueDate);
+      });
+  }
+
+  async updateReminderSettings(billId, settings) {
+    await this.delay();
+    const billIndex = this.billPayments.findIndex(bill => bill.Id === billId);
+    if (billIndex === -1) {
+      throw new Error("Bill not found");
+    }
+    
+    this.billPayments[billIndex] = {
+      ...this.billPayments[billIndex],
+      ...settings,
+      updatedAt: new Date().toISOString()
+    };
+    
+    return this.billPayments[billIndex];
+  }
+
+  async snoozeReminder(billId, hours = 24) {
+    await this.delay();
+    const snoozedUntil = new Date(Date.now() + hours * 60 * 60 * 1000).toISOString();
+    
+    return this.updateReminderSettings(billId, {
+      snoozedUntil,
+      lastReminded: new Date().toISOString()
+    });
+  }
+
+  async dismissReminder(billId) {
+    await this.delay();
+    return this.updateReminderSettings(billId, {
+      reminderEnabled: false,
+      snoozedUntil: null,
+      lastReminded: new Date().toISOString()
+    });
+  }
+
+  async getActiveReminders() {
+    await this.delay();
+    const now = new Date();
+    const bills = await this.getBillsWithReminders();
+    
+    return bills.filter(bill => {
+      if (!bill.reminderEnabled) return false;
+      if (bill.snoozedUntil && new Date(bill.snoozedUntil) > now) return false;
+      
+      return bill.isOverdue || bill.isDueToday || bill.isDueSoon;
+    });
+  }
+
+  async getReminderStats() {
+    await this.delay();
+    const bills = await this.getBillsWithReminders();
+    
+    const stats = {
+      total: bills.length,
+      overdue: bills.filter(bill => bill.isOverdue).length,
+      dueToday: bills.filter(bill => bill.isDueToday).length,
+      dueSoon: bills.filter(bill => bill.isDueSoon).length,
+      totalAmount: bills.reduce((sum, bill) => sum + bill.amount, 0),
+      overdueAmount: bills.filter(bill => bill.isOverdue).reduce((sum, bill) => sum + bill.amount, 0)
+    };
+    
+    return stats;
   }
 
   async create(billData) {

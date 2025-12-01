@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import Button from "@/components/atoms/Button";
-import Input from "@/components/atoms/Input";
-import BillCategory from "@/components/molecules/BillCategory";
-import AmountKeypad from "@/components/molecules/AmountKeypad";
-import Loading from "@/components/ui/Loading";
-import ErrorView from "@/components/ui/ErrorView";
-import ApperIcon from "@/components/ApperIcon";
 import { billPaymentService } from "@/services/api/billPaymentService";
 import { transactionService } from "@/services/api/transactionService";
 import { userAccountService } from "@/services/api/userAccountService";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import ErrorView from "@/components/ui/ErrorView";
+import Button from "@/components/atoms/Button";
+import Input from "@/components/atoms/Input";
+import Payments from "@/components/pages/Payments";
+import AmountKeypad from "@/components/molecules/AmountKeypad";
+import BillCategory from "@/components/molecules/BillCategory";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { cn } from "@/utils/cn";
 
 const BillPayments = () => {
   const navigate = useNavigate();
-  const [pendingBills, setPendingBills] = useState([]);
+const [pendingBills, setPendingBills] = useState([]);
+  const [billsWithReminders, setBillsWithReminders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   
@@ -61,12 +64,16 @@ const BillPayments = () => {
     }
   ];
 
-  const loadPendingBills = async () => {
+const loadPendingBills = async () => {
     try {
       setLoading(true);
       setError("");
-      const bills = await billPaymentService.getPendingBills();
-      setPendingBills(bills.slice(0, 3)); // Show only 3 pending bills
+      const [bills, billsWithReminder] = await Promise.all([
+        billPaymentService.getPendingBills(),
+        billPaymentService.getBillsWithReminders()
+      ]);
+      setPendingBills(bills.slice(0, 3));
+      setBillsWithReminders(billsWithReminder.slice(0, 5));
     } catch (err) {
       setError("Failed to load pending bills");
       console.error("Error loading bills:", err);
@@ -165,31 +172,93 @@ const BillPayments = () => {
       className="space-y-6"
     >
       {/* Pending Bills */}
-      {pendingBills.length > 0 && (
+{billsWithReminders.length > 0 && (
         <div className="bg-white rounded-2xl p-6 shadow-md">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Pending Bills
-          </h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900">
+              Payment Reminders
+            </h3>
+            <button
+              onClick={() => navigate('/payment-reminders')}
+              className="text-sm text-primary font-medium hover:text-primary-dark transition-colors"
+            >
+>
+              View All
+            </button>
+          </div>
           <div className="space-y-3">
-            {pendingBills.map((bill) => (
-              <div
-                key={bill.Id}
-                className="flex items-center justify-between p-3 bg-orange-50 rounded-xl border border-orange-200"
-              >
-                <div>
-                  <p className="font-medium text-gray-900">{bill.provider}</p>
-                  <p className="text-sm text-gray-600">{bill.category}</p>
+{billsWithReminders.map((bill) => {
+              const getUrgencyColors = (urgency) => {
+                  case 'critical':
+                    return 'bg-red-50 border-red-200 text-red-700';
+                  case 'high':
+                    return 'bg-orange-50 border-orange-200 text-orange-700';
+                  case 'medium':
+                    return 'bg-yellow-50 border-yellow-200 text-yellow-700';
+                  default:
+                    return 'bg-blue-50 border-blue-200 text-blue-700';
+                }
+              };
+
+              const getStatusBadge = (bill) => {
+                if (bill.isOverdue) {
+                  return <span className="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full">Overdue</span>;
+                }
+                if (bill.isDueToday) {
+                  return <span className="px-2 py-1 text-xs font-medium bg-orange-100 text-orange-800 rounded-full">Due Today</span>;
+                }
+                if (bill.isDueSoon) {
+                  return <span className="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">Due Soon</span>;
+                }
+                return <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">Upcoming</span>;
+              };
+
+              return (
+                <div
+                  key={bill.Id}
+                  className={cn(
+                    "flex items-center justify-between p-3 rounded-xl border transition-colors",
+                    getUrgencyColors(bill.urgency)
+                  )}
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className="font-medium text-gray-900">{bill.provider}</p>
+                      {getStatusBadge(bill)}
+                    </div>
+                    <p className="text-sm text-gray-600">{bill.category}</p>
+                    <div className="flex items-center gap-4 mt-2">
+                      <p className="text-xs text-gray-500">
+                        Due: {new Date(bill.dueDate).toLocaleDateString()}
+                      </p>
+                      {bill.daysUntilDue < 0 ? (
+                        <p className="text-xs text-red-600 font-medium">
+                          {Math.abs(bill.daysUntilDue)} days overdue
+                        </p>
+                      ) : bill.daysUntilDue === 0 ? (
+                        <p className="text-xs text-orange-600 font-medium">
+                          Due today
+                        </p>
+                      ) : (
+                        <p className="text-xs text-gray-500">
+                          {bill.daysUntilDue} days left
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-gray-900">
+                      {formatCurrency(bill.amount)}
+                    </p>
+                    {bill.urgency === 'critical' && (
+                      <div className="w-16 bg-red-200 rounded-full h-2 mt-1">
+                        <div className="bg-red-500 h-2 rounded-full animate-pulse" style={{ width: '100%' }} />
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="font-semibold text-orange-600">
-                    {formatCurrency(bill.amount)}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Due: {new Date(bill.dueDate).toLocaleDateString()}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
